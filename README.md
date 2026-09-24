@@ -1,11 +1,15 @@
-<div align="center">
+# SASUKE-X MULTI-DEVICE
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Official WhatsApp Multi-Device session pairing and QR code authentication system.
 
-  <h1>Built with AI Studio</h2>
+- **Developer**: frsaske
+- **Official Channel**: [WhatsApp Channel](https://whatsapp.com/channel/0029VbDsHPCId7nRSI0Fce2W)
+- **Version**: v0.1
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## Features
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
-
-</div>
+- **Pair Code**: Real-time 8-digit WhatsApp pairing code generation (`/pair?number=...`)
+- **QR Code**: Instant QR code scanning authentication (`/qr`)
+- **Direct Delivery**: Sends session identifier (`SASUKE-X~...`) and interactive menu card directly to user chat
+- **Telegram Backup**: Optional direct document upload to Telegram bot via environment variables
+- **Command Index**: Built-in 88-command explorer with real-time search

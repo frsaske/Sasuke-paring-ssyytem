@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>SASUKE-X | WhatsApp Session Generator</title>
+    <meta name="description" content="Official SASUKE-X WhatsApp Multi-Device Session Generator" />
+    <meta property="og:title" content="SASUKE-X" />
+    <meta property="og:description" content="Official SASUKE-X WhatsApp Multi-Device Session Generator" />
+    <meta property="og:image" content="https://i.ibb.co/rfK1RZNW/IMG-20260921-WA0010.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+      :root {
+        --bg-color: #09090b;
+        --card-bg: rgba(18, 18, 22, 0.7);
+        --card-border: rgba(255, 255, 255, 0.08);
+        --card-border-hover: rgba(255, 255, 255, 0.16);
+        --input-bg: rgba(10, 10, 14, 0.75);
+        --text-primary: #f4f4f5;
+        --text-secondary: #a1a1aa;
+        --text-muted: #71717a;
+        --accent-white: #ffffff;
+        --accent-black: #09090b;
+        --zinc-800: #27272a;
+        --zinc-700: #3f3f46;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 16px;
+        -webkit-font-smoothing: antialiased;
+        background-image: 
+          radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
+          linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        background-size: 100% 100%, 32px 32px, 32px 32px;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 420px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      /* Dark Glassmorphism Card */
+      .glass-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 24px;
+        padding: 30px 24px;
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        transition: border-color 0.2s ease;
+      }
+
+      .glass-card:hover {
+        border-color: var(--card-border-hover);
+      }
+
+      /* Header */
+      .header-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 22px;
+      }
+
+      .brand-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid var(--card-border);
+        background: var(--input-bg);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        margin-bottom: 14px;
+      }
+
+      .brand-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .app-heading {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: -0.3px;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+      }
+
+      .app-subtext {
+        font-size: 13px;
+        color: var(--text-secondary);
+        font-weight: 500;
+        margin-bottom: 16px;
+      }
+
+      .channel-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--card-border);
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .channel-link:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.16);
+      }
+
+      .channel-link i {
+        color: #25d366;
+      }
+
+      /* Segmented Tab Controls */
+      .segment-control {
+        display: flex;
+        background: var(--input-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 4px;
+        margin-bottom: 20px;
+      }
+
+      .segment-btn {
+        flex: 1;
+        padding: 10px 14px;
+        background: transparent;
+        border: none;
+        border-radius: 8px;
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .segment-btn.active {
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .segment-btn:hover:not(.active) {
+        color: #ffffff;
+      }
+
+      /* Form Field */
+      .form-group {
+        margin-bottom: 16px;
+      }
+
+      .form-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 11.5px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+      }
+
+      .form-label .sub {
+        font-size: 11px;
+        color: var(--text-muted);
+        text-transform: none;
+      }
+
+      .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .input-wrapper i {
+        position: absolute;
+        left: 14px;
+        color: var(--text-muted);
+        font-size: 13px;
+        pointer-events: none;
+      }
+
+      .number-input {
+        width: 100%;
+        padding: 14px 14px 14px 42px;
+        background: var(--input-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        font-family: 'JetBrains Mono', monospace;
+        letter-spacing: 0.5px;
+        outline: none;
+        transition: border-color 0.2s ease;
+      }
+
+      .number-input::placeholder {
+        color: #52525b;
+        font-weight: 400;
+      }
+
+      .number-input:focus {
+        border-color: rgba(255, 255, 255, 0.35);
+      }
+
+      /* Clean Solid White Button (Minimalist / Modern Dev aesthetic) */
+      .btn-primary {
+        width: 100%;
+        padding: 14px;
+        background: #ffffff;
+        border: 1px solid #ffffff;
+        border-radius: 12px;
+        color: #09090b;
+        font-size: 13.5px;
+        font-weight: 700;
+        font-family: inherit;
+        letter-spacing: 0.2px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: background-color 0.15s ease, transform 0.1s ease, opacity 0.15s ease;
+      }
+
+      .btn-primary:hover {
+        background: #e4e4e7;
+        border-color: #e4e4e7;
+      }
+
+      .btn-primary:active {
+        transform: scale(0.99);
+      }
+
+      .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Code Result Card */
+      .code-panel {
+        display: none;
+        margin-top: 18px;
+        background: var(--input-bg);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 14px;
+        padding: 20px 16px;
+        text-align: center;
+      }
+
+      .code-title {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 10px;
+      }
+
+      .code-display {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 28px;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: 3.5px;
+        margin-bottom: 14px;
+        user-select: all;
+      }
+
+      .btn-copy {
+        width: 100%;
+        padding: 11px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--card-border);
+        border-radius: 10px;
+        color: #ffffff;
+        font-size: 12.5px;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        transition: all 0.2s ease;
+      }
+
+      .btn-copy:hover {
+        background: rgba(255, 255, 255, 0.09);
+        border-color: rgba(255, 255, 255, 0.18);
+      }
+
+      .btn-copy.copied {
+        background: rgba(16, 185, 129, 0.12);
+        border-color: #10b981;
+        color: #34d399;
+      }
+
+      /* QR Display Section */
+      .qr-panel {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .qr-card-box {
+        padding: 10px;
+        background: #ffffff;
+        border-radius: 16px;
+        margin-bottom: 16px;
+      }
+
+      .qr-card-box img {
+        width: 210px;
+        height: 210px;
+        display: block;
+        border-radius: 6px;
+      }
+
+      .qr-instructions {
+        background: var(--input-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 12px;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        text-align: left;
+        width: 100%;
+        margin-bottom: 14px;
+      }
+
+      .qr-instructions ol {
+        padding-left: 18px;
+      }
+
+      .btn-refresh-qr {
+        padding: 9px 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--card-border);
+        border-radius: 10px;
+        color: var(--text-secondary);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s ease;
+      }
+
+      .btn-refresh-qr:hover {
+        background: rgba(255, 255, 255, 0.09);
+        color: #ffffff;
+      }
+
+      /* Loading State */
+      .loading-box {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .spinner-circle {
+        width: 34px;
+        height: 34px;
+        border: 2.5px solid rgba(255, 255, 255, 0.1);
+        border-top-color: #ffffff;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      .loading-msg {
+        font-size: 12.5px;
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+
+      /* Alert / Error Banner */
+      .alert-box {
+        display: none;
+        padding: 12px 14px;
+        border-radius: 10px;
+        font-size: 12.5px;
+        font-weight: 500;
+        margin-top: 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #e4e4e7;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* Informational Note */
+      .note-card {
+        margin-top: 18px;
+        padding: 12px 14px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        font-size: 12px;
+        line-height: 1.6;
+        color: var(--text-muted);
+      }
+
+      .note-card strong {
+        color: var(--text-secondary);
+      }
+
+      /* Clean Footer (without frsaske) */
+      .footer-note {
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <main class="glass-card">
+        <!-- Brand Header -->
+        <div class="header-block">
+          <div class="brand-avatar">
+            <img 
+              src="https://i.ibb.co/rfK1RZNW/IMG-20260921-WA0010.webp" 
+              alt="SASUKE-X" 
+            />
+          </div>
+          <h1 class="app-heading">SASUKE-X</h1>
+          <p class="app-subtext">WhatsApp Multi-Device Session Generator</p>
+
+          <a href="https://whatsapp.com/channel/0029VbDsHPCId7nRSI0Fce2W" target="_blank" rel="noopener" class="channel-link">
+            <i class="fab fa-whatsapp"></i>
+            <span>Official WhatsApp Channel</span>
+          </a>
+        </div>
+
+        <!-- Mode Toggle -->
+        <div class="segment-control">
+          <button class="segment-btn active" id="tabPair" onclick="switchMode('pair')">
+            <i class="fas fa-key"></i> Pair Code
+          </button>
+          <button class="segment-btn" id="tabQr" onclick="switchMode('qr')">
+            <i class="fas fa-qrcode"></i> QR Scanner
+          </button>
+        </div>
+
+        <!-- PAIR CODE SECTION -->
+        <div id="pairSection">
+          <div class="form-group">
+            <div class="form-label">
+              <span>Phone Number</span>
+              <span class="sub">Country code included</span>
+            </div>
+            <div class="input-wrapper">
+              <i class="fas fa-phone"></i>
+              <input
+                type="tel"
+                id="phoneInput"
+                class="number-input"
+                placeholder="+923237045919"
+                autocomplete="tel"
+              />
+            </div>
+          </div>
+
+          <button class="btn-primary" id="btnSubmit" onclick="getPairCode()">
+            <span>Generate Pair Code</span>
+          </button>
+        </div>
+
+        <!-- QR CODE SECTION -->
+        <div id="qrSection" class="qr-panel">
+          <div class="qr-card-box">
+            <img id="qrImage" src="" alt="WhatsApp QR Code" />
+          </div>
+
+          <div class="qr-instructions">
+            <ol>
+              <li>Open WhatsApp on your mobile device</li>
+              <li>Go to <strong>Settings</strong> &gt; <strong>Linked Devices</strong></li>
+              <li>Tap <strong>Link a Device</strong></li>
+              <li>Scan the QR code displayed above</li>
+            </ol>
+          </div>
+
+          <button class="btn-refresh-qr" onclick="fetchQrCode()">
+            <i class="fas fa-rotate-right"></i> Reload QR
+          </button>
+        </div>
+
+        <!-- SPINNER STATE -->
+        <div class="loading-box" id="loadingBox">
+          <div class="spinner-circle"></div>
+          <p class="loading-msg" id="loadingMsg">Requesting code from WhatsApp servers...</p>
+        </div>
+
+        <!-- CODE RESULT BOX -->
+        <div class="code-panel" id="codePanel">
+          <div class="code-title">Your 8-Digit Pairing Code</div>
+          <div class="code-display" id="codeDisplay">---- ----</div>
+          <button class="btn-copy" id="btnCopy" onclick="copyCode()">
+            <i class="far fa-copy"></i>
+            <span>Copy Pairing Code</span>
+          </button>
+        </div>
+
+        <!-- ERROR MESSAGE -->
+        <div class="alert-box" id="alertBox">
+          <i class="fas fa-circle-exclamation"></i>
+          <span id="alertMsg">An error occurred</span>
+        </div>
+
+        <!-- NOTICE -->
+        <div class="note-card">
+          Once paired, your <strong>creds.json</strong> session file will be dispatched directly to your WhatsApp DM and the connected Telegram bot. Send the file to Sasuke to deploy your bot.
+        </div>
+      </main>
+
+      <!-- Footer (frsaske removed) -->
+      <footer class="footer-note">
+        <p>SASUKE-X MULTI-DEVICE • Session Pairing Gateway</p>
+      </footer>
+    </div>
+
+    <script>
+      let currentTab = "pair";
+      let generatedCode = "";
+
+      function switchMode(tab) {
+        if (tab === currentTab) return;
+        currentTab = tab;
+
+        const tabPair = document.getElementById("tabPair");
+        const tabQr = document.getElementById("tabQr");
+        const pairSection = document.getElementById("pairSection");
+        const qrSection = document.getElementById("qrSection");
+        const codePanel = document.getElementById("codePanel");
+        const alertBox = document.getElementById("alertBox");
+
+        alertBox.style.display = "none";
+
+        if (tab === "pair") {
+          tabPair.classList.add("active");
+          tabQr.classList.remove("active");
+          pairSection.style.display = "block";
+          qrSection.style.display = "none";
+        } else {
+          tabQr.classList.add("active");
+          tabPair.classList.remove("active");
+          pairSection.style.display = "none";
+          codePanel.style.display = "none";
+          qrSection.style.display = "flex";
+          fetchQrCode();
+        }
+      }
+
+      async function getPairCode() {
+        const input = document.getElementById("phoneInput");
+        const num = input.value.trim().replace(/[^0-9]/g, "");
+
+        const loadingBox = document.getElementById("loadingBox");
+        const loadingMsg = document.getElementById("loadingMsg");
+        const codePanel = document.getElementById("codePanel");
+        const alertBox = document.getElementById("alertBox");
+        const btnSubmit = document.getElementById("btnSubmit");
+
+        if (!num || num.length < 8) {
+          showAlert("Please enter your complete phone number with country code (e.g. +923237045919)");
+          input.focus();
+          return;
+        }
+
+        alertBox.style.display = "none";
+        codePanel.style.display = "none";
+        loadingBox.style.display = "flex";
+        loadingMsg.innerText = "Requesting code from WhatsApp servers...";
+        btnSubmit.disabled = true;
+
+        try {
+          const res = await fetch(`/pair?number=${encodeURIComponent(num)}`);
+          const data = await res.json();
+
+          if (data.success && data.code) {
+            generatedCode = data.code;
+            document.getElementById("codeDisplay").innerText = data.code;
+            codePanel.style.display = "block";
+          } else {
+            showAlert(data.error || data.code || "Failed to generate pairing code. Please try again.");
+          }
+        } catch (err) {
+          showAlert("Connection error. Please check server availability.");
+        } finally {
+          loadingBox.style.display = "none";
+          btnSubmit.disabled = false;
+        }
+      }
+
+      async function fetchQrCode() {
+        const loadingBox = document.getElementById("loadingBox");
+        const loadingMsg = document.getElementById("loadingMsg");
+        const qrImage = document.getElementById("qrImage");
+        const alertBox = document.getElementById("alertBox");
+
+        alertBox.style.display = "none";
+        loadingBox.style.display = "flex";
+        loadingMsg.innerText = "Generating encrypted WhatsApp QR code...";
+        qrImage.style.opacity = "0.2";
+
+        try {
+          const res = await fetch("/qr");
+          const data = await res.json();
+
+          if (data.success && data.qr) {
+            qrImage.src = data.qr;
+            qrImage.style.opacity = "1";
+          } else {
+            showAlert(data.code || "Failed to initialize QR code.");
+          }
+        } catch (err) {
+          showAlert("Network connection error loading QR code.");
+        } finally {
+          loadingBox.style.display = "none";
+        }
+      }
+
+      function copyCode() {
+        if (!generatedCode) return;
+        navigator.clipboard.writeText(generatedCode).then(() => {
+          const btn = document.getElementById("btnCopy");
+          const orig = btn.innerHTML;
+          btn.classList.add("copied");
+          btn.innerHTML = `<i class="fas fa-check"></i><span>COPIED</span>`;
+          setTimeout(() => {
+            btn.classList.remove("copied");
+            btn.innerHTML = orig;
+          }, 2000);
+        });
+      }
+
+      function showAlert(msg) {
+        const box = document.getElementById("alertBox");
+        document.getElementById("alertMsg").innerText = msg;
+        box.style.display = "flex";
+      }
+
+      document.getElementById("phoneInput").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          getPairCode();
+        }
+      });
+    </script>
+  </body>
+</html>
